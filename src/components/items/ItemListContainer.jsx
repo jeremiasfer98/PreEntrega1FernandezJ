@@ -1,5 +1,6 @@
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useCart } from '../contextos/CartContext';
 
 const productos = [
 { id: 1, nombre: 'Buzo Tokio', descripcion: '100% algodon', categoria: 'buzos' },
@@ -10,12 +11,8 @@ const productos = [
 
 const ItemListContainer = () => {
 const { categoria } = useParams();
-const [productosFiltrados, setProductosFiltrados] = useState([]);
-
-useEffect(() => {
-    const productosFiltrados = productos.filter(producto => producto.categoria === categoria);
-    setProductosFiltrados(productosFiltrados);
-}, [categoria]);
+const { addItemToCart } = useCart();
+const productosFiltrados = categoria ? productos.filter(producto => producto.categoria === categoria) : productos;
 
 return (
     <div className="item-list">
@@ -23,11 +20,10 @@ return (
     <ul>
         {productosFiltrados.map(producto => (
         <div key={producto.id}>
-        <h3>{producto.nombre}</h3>
-        <p>{producto.precio}</p>
-        <p>{producto.descripcion}</p>
-        <Link to={`/item/${producto.id}`}>Mas Informacion</Link>
-        <button>Comprar</button>
+            <h3>{producto.nombre}</h3>
+            <p>{producto.descripcion}</p>
+            <Link to={`/item/${producto.id}`}>Más Información</Link>
+            <button onClick={() => addItemToCart(producto)}>Comprar</button>
         </div>
         ))}
     </ul>

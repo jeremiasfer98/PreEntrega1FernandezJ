@@ -1,12 +1,15 @@
-import React from 'react';
+// En CartWidget.jsx
+import { useCart } from '../contextos/CartContext';
 
 const CartWidget = () => {
-return (
-    <div className="cart-widget">
-    <i className="bi bi-cart"></i>
-      <span className="badge badge-danger">2</span>
-    </div>
-)
-}
+  const { cartItems } = useCart();
 
-export default CartWidget
+  return (
+    <div className="cart-widget">
+      <i className="bi bi-cart"></i>
+      <span className="badge badge-danger">{cartItems.length}</span>
+    </div>
+  );
+};
+
+export default CartWidget;
